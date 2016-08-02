@@ -338,7 +338,7 @@ def function_name(chapters, series, tags, author, status):
     
     
     zipper(chapdir, f_name)
-	PBNotif(chapter, series)
+    PBNotif(chapter, series)
     
     if args.add_to_calibre:
       add_to_calibre(f_name, [chapter['name'], series, tags, chapter['pages'], chapter['date'], author])
