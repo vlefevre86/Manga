@@ -4,6 +4,7 @@ from os.path import expanduser
 from datetime import datetime
 import urllib.request
 import urllib.parse
+import pushbullet
 import argparse
 import tempfile
 import logging
@@ -282,6 +283,14 @@ def save(links, dirName, img_type, image_links=False):
         f.write(data)
   print()
 
+
+def PBNotif(chapter, series)
+  global xml_list
+  
+  PBAPI = re.findall('(\n?<entry>\\s*(.*?)\\s*</entry>)', xml_list, re.DOTALL|re.MULTILINE)
+  my_push = pushbullet.PBPushes(PBAPI)
+  my_push.pushes(type='note', title='New manga chapter downloaded', body=''Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5))')
+
 #I'm calling this function name because I can't think of a better name for it
 def function_name(chapters, series, tags, author, status):
   global xml_list
@@ -330,6 +339,7 @@ def function_name(chapters, series, tags, author, status):
     
     
     zipper(chapdir, f_name)
+	PBNotif(chapter, series)
     
     if args.add_to_calibre:
       add_to_calibre(f_name, [chapter['name'], series, tags, chapter['pages'], chapter['date'], author])
@@ -594,6 +604,7 @@ def mangapanda(url, download_chapters):
   if chapters:
     function_name(chapters, series, tags, author, status)
 
+	
 def goodmanga(url, download_chapters):
   html  = get_html(url)
   global last
