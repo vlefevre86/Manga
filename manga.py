@@ -285,8 +285,13 @@ def save(links, dirName, img_type, image_links=False):
 
 def PBNotif(chapter, series):
   global xml_list
-  
+
   PBAPI = re.findall('(\n?<PushbulletAPI>\\s*(.*?)\\s*</PushbulletAPI>)', xml_list, re.DOTALL|re.MULTILINE)
+
+  if args.debug or args.verbose:
+    print('  PBAPI - \"{}\"'.format(PBAPI))
+    print('  Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)))
+  
   my_push = pushbullet.PBPushes(PBAPI)
   my_push.pushes(type='note', title='New manga chapter downloaded', body='Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)))
 
