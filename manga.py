@@ -286,7 +286,7 @@ def save(links, dirName, img_type, image_links=False):
 def PBNotif(chapter, series):
   global xml_list
 
-  PBAPI = re.findall('(\n?<PushbulletAPI>\\s*(.*?)\\s*</PushbulletAPI>)', xml_list, re.DOTALL|re.MULTILINE)
+  PBAPI = re.search('<PushbulletAPI>(.*?)</PushbulletAPI>', xml_list, re.DOTALL|re.MULTILINE).group(1).strip()
 
   if args.debug or args.verbose:
     print('  PBAPI - \"{}\"'.format(PBAPI))
