@@ -283,14 +283,12 @@ def save(links, dirName, img_type, image_links=False):
         f.write(data)
   print()
 
-
 def PBNotif(chapter, series):
   global xml_list
   
   PBAPI = re.findall('(\n?<PushbulletAPI>\\s*(.*?)\\s*</PushbulletAPI>)', xml_list, re.DOTALL|re.MULTILINE)
   my_push = pushbullet.PBPushes(PBAPI)
   my_push.pushes(type='note', title='New manga chapter downloaded', body='Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)))
-
 
 #I'm calling this function name because I can't think of a better name for it
 def function_name(chapters, series, tags, author, status):
