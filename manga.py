@@ -44,7 +44,7 @@ tag_dict = {
   'Slice of Life':  'Nichijou'
 }
 calibredb_executable = 'calibredb'
-lib_path='/home/az/Pictures/.manga/Manga_LN'
+lib_path='/ebooks'
 batoto_lang = 'English'
 
 #My own version of title case
