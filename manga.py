@@ -4,7 +4,7 @@ from os.path import expanduser
 from datetime import datetime
 import urllib.request
 import urllib.parse
-import pushbullet
+from pushover import init, Client
 import argparse
 import tempfile
 import logging
@@ -283,17 +283,16 @@ def save(links, dirName, img_type, image_links=False):
         f.write(data)
   print()
 
-def PBNotif(chapter, series):
+def PONotif(chapter, series):
   global xml_list
 
-  PBAPI = re.search('<PushbulletAPI>(.*?)</PushbulletAPI>', xml_list, re.DOTALL|re.MULTILINE).group(1).strip()
+  PO_token = re.search('<PO_token>(.*?)</PO_token>', xml_list, re.DOTALL|re.MULTILINE).group(1).strip()
+  PO_user = re.search('<PO_user>(.*?)</PO_user>', xml_list, re.DOTALL|re.MULTILINE).group(1).strip()
 
-  if args.debug or args.verbose:
-    print('  PBAPI - \"{}\"'.format(PBAPI))
-    print('  Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)))
-  
-  my_push = pushbullet.PBPushes(PBAPI)
-  my_push.pushes(type='note', title='New manga chapter downloaded', body='Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)))
+  client = Client(PO_user, api_token=PO_token)
+
+  client.send_message('Series: \"{}\"\nChapter: {}\n\n'.format(series, '{:3.1f}'.format(chapter['num']).zfill(5)), title="New manga chapter downloaded")
+
 
 #I'm calling this function name because I can't think of a better name for it
 def function_name(chapters, series, tags, author, status):
@@ -343,7 +342,7 @@ def function_name(chapters, series, tags, author, status):
     
     
     zipper(chapdir, f_name)
-    PBNotif(chapter, series)
+    PONotif(chapter, series)
     
     if args.add_to_calibre:
       add_to_calibre(f_name, [chapter['name'], series, tags, chapter['pages'], chapter['date'], author])
