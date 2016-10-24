@@ -1,4 +1,5 @@
-<PushbulletAPI>api</PushbulletAPI>
+<PO_user>your_user_key</PO_user>
+<PO_token>your_api_token</PO_token>
 <entry>
 	<url>http://www.mangareader.net/fairy-tail</url>
 	<last>506.0</last>
